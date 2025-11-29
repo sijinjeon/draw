@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark" data-theme-style="space">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎰 Multi-Mode Roulette | 추첨 룰렛</title>
+  <meta name="description" content="4가지 재미있는 모드로 추첨하세요! 3D 휠 스피너, 마블 레이스, 풍선 터뜨리기, 해적 룰렛">
+  
+  <!-- 파비콘 -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎰</text></svg>">
+  
+  <!-- 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Orbitron:wght@600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/main.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/animations.css">
+  
+  <!-- External Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js" defer></script>
+</head>
+<body>
+  <!-- Skip Link -->
+  <a href="#mode-container" class="sr-only">메인 컨텐츠로 건너뛰기</a>
+
+  <!-- ========== HEADER ========== -->
+  <header class="header" role="banner">
+    <div class="header__container">
+      <a href="#" class="header__logo" aria-label="Multi-Mode Roulette 홈">
+        <span>🎰</span>
+        <span class="header__title">Multi-Mode Roulette</span>
+      </a>
+      
+      <div class="header__controls">
+        <!-- 테마 스타일 -->
+        <select id="theme-select" class="select-field-compact" aria-label="테마 선택">
+          <option value="space">🌌 우주</option>
+          <option value="neon">💜 네온</option>
+          <option value="minimal">⚪ 미니멀</option>
+          <option value="retro">🕹️ 레트로</option>
+          <option value="nature">🌿 자연</option>
+        </select>
+        
+        <!-- 다크/라이트 토글 -->
+        <button id="theme-toggle" class="btn-icon" aria-label="다크 모드 전환">
+          <span class="theme-toggle-icon">🌙</span>
+        </button>
+        
+        <!-- 사운드 토글 -->
+        <button id="sound-toggle" class="btn-icon" aria-label="사운드 토글">
+          <span class="sound-toggle-icon">🔊</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== MAIN ========== -->
+  <main class="main" role="main">
+    
+    <!-- 모드 선택 섹션 -->
+    <section id="mode-selection" class="mode-selection" aria-label="추첨 모드 선택">
+      <div class="mode-grid">
+        <button class="mode-card" data-mode="marble" aria-pressed="false">
+          <span class="mode-card__icon">🎱</span>
+          <span class="mode-card__title">마블 레이스</span>
+        </button>
+        <button class="mode-card active" data-mode="wheel" aria-pressed="true">
+          <span class="mode-card__icon">🎡</span>
+          <span class="mode-card__title">3D 휠 스피너</span>
+        </button>
+        <button class="mode-card" data-mode="balloon" aria-pressed="false">
+          <span class="mode-card__icon">🎈</span>
+          <span class="mode-card__title">풍선 터뜨리기</span>
+        </button>
+        <button class="mode-card" data-mode="pirate" aria-pressed="false">
+          <span class="mode-card__icon">🏴‍☠️</span>
+          <span class="mode-card__title">해적 룰렛</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- 컨트롤 바 (상단 배너) -->
+    <section id="control-bar" class="control-bar" aria-label="추첨 설정">
+      
+      <!-- 참가자 입력 (드롭다운 트리거) -->
+      <div class="control-item participant-control">
+        <button 
+          id="participant-trigger" 
+          class="control-trigger"
+          aria-expanded="false"
+          aria-controls="participant-dropdown"
+        >
+          <span class="control-icon">📝</span>
+          <span class="control-label">참가자 입력</span>
+          <span id="participant-count" class="control-badge">0명</span>
+          <span class="control-arrow">▼</span>
+        </button>
+        
+        <!-- 참가자 입력 드롭다운 팝업 -->
+        <div id="participant-dropdown" class="dropdown-popup" hidden>
+          <div class="dropdown-content">
+            <textarea 
+              id="participant-input" 
+              class="input-field"
+              placeholder="이름을 입력하세요&#10;쉼표(,) 또는 줄바꿈으로 구분&#10;&#10;예시: 홍길동, 김철수, 이영희"
+              aria-describedby="input-hint"
+              rows="6"
+            ></textarea>
+            <p id="input-hint" class="input-hint">
+              최대 100명, 이름당 20자 이내
+            </p>
+            <!-- 참가자 미리보기 -->
+            <div id="participant-preview" class="participant-preview">
+              <!-- JS로 동적 생성 -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 당첨자 수 -->
+      <div class="control-item">
+        <label for="winner-count" class="control-label-inline">당첨자</label>
+        <select id="winner-count" class="select-field-compact">
+          <option value="1">1명</option>
+          <option value="2">2명</option>
+          <option value="3">3명</option>
+          <option value="4">4명</option>
+          <option value="5">5명</option>
+          <option value="6">6명</option>
+          <option value="7">7명</option>
+          <option value="8">8명</option>
+          <option value="9">9명</option>
+          <option value="10">10명</option>
+        </select>
+      </div>
+
+      <!-- 애니메이션 속도 -->
+      <div class="control-item">
+        <label for="speed-select" class="control-label-inline">속도</label>
+        <select id="speed-select" class="select-field-compact">
+          <option value="slow">느림</option>
+          <option value="normal" selected>보통</option>
+          <option value="fast">빠름</option>
+        </select>
+      </div>
+
+      <!-- 풀스크린 버튼 -->
+      <button id="fullscreen-btn" class="btn-icon-compact" aria-label="풀스크린">
+        ⛶
+      </button>
+
+      <!-- 추첨 시작 버튼 -->
+      <button id="start-button" class="btn-primary-compact" disabled>
+        🎰 추첨 시작
+      </button>
+    </section>
+
+    <!-- 캔버스 영역 (화면 전체) -->
+    <section id="mode-container" class="canvas-area-fullscreen" aria-label="추첨 애니메이션">
+      <!-- 각 모드별 캔버스가 동적으로 삽입됨 -->
+      <div class="canvas-placeholder">
+        <div class="placeholder-content">
+          <span class="placeholder-icon animate-float">🎰</span>
+          <p class="placeholder-text">모드를 선택하고 참가자를 입력하세요</p>
+          <p class="placeholder-hint">Space: 시작 | F: 풀스크린 | D: 다크모드 | 1-4: 모드</p>
+        </div>
+      </div>
+    </section>
+    
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" role="contentinfo">
+    © 2025 SIREAL | Space: 시작 | F: 풀스크린 | D: 다크모드 | R: 리셋
+  </footer>
+
+  <!-- ========== 결과 모달 ========== -->
+  <div id="results-modal" class="modal-overlay" hidden role="dialog" aria-modal="true" aria-label="당첨 결과">
+    <!-- JS로 동적 생성 -->
+  </div>
+
+  <!-- ========== 토스트 컨테이너 ========== -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- 메인 스크립트 -->
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
+

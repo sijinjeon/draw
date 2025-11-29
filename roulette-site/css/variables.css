@@ -1,0 +1,202 @@
+/**
+ * @file variables.css
+ * @description CSS 변수 정의 - 색상, 폰트, 간격, 그림자 등
+ */
+
+/* ========== 다크 모드 (기본) - 우주 테마 ========== */
+:root,
+[data-theme="dark"] {
+  /* 배경 계층 */
+  --bg-primary: #0a0a1a;
+  --bg-secondary: #1a1a3a;
+  --bg-tertiary: #2a2a4a;
+  --bg-elevated: #2f2f5f;
+
+  /* 강조색 */
+  --accent-primary: #6366f1;
+  --accent-secondary: #8b5cf6;
+  --accent-tertiary: #a855f7;
+  --accent-glow: rgba(139, 92, 246, 0.5);
+
+  /* 텍스트 */
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #6b6b7a;
+  --text-inverse: #0a0a1a;
+
+  /* 시맨틱 색상 */
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+
+  /* 그라데이션 */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-accent: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  --gradient-gold: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+
+  /* 테두리 */
+  --border-color: #3a3a5a;
+  --border-focus: #6366f1;
+  --divider: #2a2a4a;
+
+  /* 그림자 */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px var(--accent-glow);
+}
+
+/* ========== 라이트 모드 ========== */
+[data-theme="light"] {
+  --bg-primary: #f8f9fc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #eef0f5;
+  --bg-elevated: #ffffff;
+
+  --accent-primary: #4f46e5;
+  --accent-secondary: #7c3aed;
+  --accent-tertiary: #8b5cf6;
+  --accent-glow: rgba(79, 70, 229, 0.3);
+
+  --text-primary: #1a1a2e;
+  --text-secondary: #4a4a5a;
+  --text-muted: #9a9aaa;
+  --text-inverse: #ffffff;
+
+  --border-color: #e2e4e9;
+  --border-focus: #4f46e5;
+  --divider: #eef0f5;
+
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --shadow-glow: 0 0 20px var(--accent-glow);
+}
+
+/* ========== 테마 스타일 ========== */
+
+/* 💜 네온 (Neon) */
+[data-theme-style="neon"] {
+  --bg-primary: #000000;
+  --bg-secondary: #0d0d0d;
+  --bg-tertiary: #1a1a1a;
+  --accent-primary: #ff006e;
+  --accent-secondary: #00f5ff;
+  --accent-glow: rgba(255, 0, 110, 0.6);
+  --gradient-primary: linear-gradient(135deg, #ff006e 0%, #00f5ff 100%);
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --border-color: #333333;
+}
+
+/* ⚪ 미니멀 (Minimal) */
+[data-theme-style="minimal"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #eeeeee;
+  --accent-primary: #000000;
+  --accent-secondary: #333333;
+  --accent-glow: rgba(0, 0, 0, 0.2);
+  --gradient-primary: linear-gradient(135deg, #333333 0%, #000000 100%);
+  --text-primary: #000000;
+  --text-secondary: #666666;
+  --border-color: #e0e0e0;
+}
+
+/* 🕹️ 레트로 (Retro) */
+[data-theme-style="retro"] {
+  --bg-primary: #0a1f0a;
+  --bg-secondary: #0f2f0f;
+  --bg-tertiary: #143f14;
+  --accent-primary: #00ff00;
+  --accent-secondary: #33ff33;
+  --accent-glow: rgba(0, 255, 0, 0.4);
+  --gradient-primary: linear-gradient(135deg, #00cc00 0%, #00ff00 100%);
+  --text-primary: #00ff00;
+  --text-secondary: #00cc00;
+  --border-color: #00ff00;
+}
+
+/* 🌿 자연 (Nature) */
+[data-theme-style="nature"] {
+  --bg-primary: #1a2f1a;
+  --bg-secondary: #243524;
+  --bg-tertiary: #2e402e;
+  --accent-primary: #10b981;
+  --accent-secondary: #34d399;
+  --accent-glow: rgba(16, 185, 129, 0.4);
+  --gradient-primary: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  --text-primary: #ecfdf5;
+  --text-secondary: #a7f3d0;
+  --border-color: #2e5a2e;
+}
+
+/* ========== 폰트 ========== */
+:root {
+  --font-display: 'Orbitron', 'Noto Sans KR', sans-serif;
+  --font-body: 'Inter', 'Noto Sans KR', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-retro: 'Press Start 2P', monospace;
+}
+
+/* 레트로 테마일 때 폰트 변경 */
+[data-theme-style="retro"] {
+  --font-display: 'Press Start 2P', monospace;
+}
+
+/* ========== 폰트 크기 ========== */
+:root {
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: 2.5rem;
+  --text-5xl: 3rem;
+  --text-hero: 4rem;
+}
+
+/* ========== 간격 ========== */
+:root {
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+}
+
+/* ========== 트랜지션 ========== */
+:root {
+  --duration-fast: 0.15s;
+  --duration-normal: 0.3s;
+  --duration-slow: 0.5s;
+  --ease-default: ease;
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ========== 반응형 폰트 크기 ========== */
+@media (max-width: 640px) {
+  :root {
+    --text-hero: 2.5rem;
+    --text-4xl: 2rem;
+    --text-3xl: 1.5rem;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1024px) {
+  :root {
+    --text-hero: 3rem;
+    --text-4xl: 2.25rem;
+  }
+}
+

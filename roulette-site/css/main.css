@@ -1,0 +1,240 @@
+/**
+ * @file main.css
+ * @description 메인 레이아웃 스타일
+ */
+
+/* ========== 리셋 & 기본 ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background-color var(--duration-normal), color var(--duration-normal);
+}
+
+/* ========== 헤더 ========== */
+.header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: var(--spacing-3) var(--spacing-6);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header__container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  text-decoration: none;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  transition: color var(--duration-normal);
+}
+
+.header__logo:hover {
+  color: var(--accent-primary);
+}
+
+.header__title {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .header__title {
+    display: inline;
+  }
+}
+
+.header__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+/* ========== 메인 ========== */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* ========== 모드 선택 ========== */
+.mode-selection {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: var(--spacing-3) var(--spacing-6);
+}
+
+.mode-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-3);
+  flex-wrap: wrap;
+}
+
+/* ========== 컨트롤 바 ========== */
+.control-bar {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: var(--spacing-3) var(--spacing-6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-4);
+  flex-wrap: wrap;
+}
+
+.control-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  position: relative;
+}
+
+/* ========== 캔버스 영역 ========== */
+.canvas-area-fullscreen {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+.canvas-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.placeholder-content {
+  text-align: center;
+  padding: var(--spacing-8);
+}
+
+.placeholder-icon {
+  font-size: 5rem;
+  display: block;
+  margin-bottom: var(--spacing-4);
+  animation: float 3s ease-in-out infinite;
+}
+
+.placeholder-text {
+  font-size: var(--text-xl);
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-2);
+}
+
+.placeholder-hint {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* ========== 푸터 ========== */
+.footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: var(--spacing-3) var(--spacing-6);
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+/* ========== 토스트 컨테이너 ========== */
+.toast-container {
+  position: fixed;
+  bottom: var(--spacing-6);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+/* ========== 모달 오버레이 ========== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  animation: fadeIn var(--duration-normal) ease;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+/* ========== 유틸리티 ========== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ========== 반응형 ========== */
+@media (max-width: 640px) {
+  .header {
+    padding: var(--spacing-2) var(--spacing-4);
+  }
+
+  .mode-selection {
+    padding: var(--spacing-2) var(--spacing-4);
+  }
+
+  .control-bar {
+    padding: var(--spacing-2) var(--spacing-4);
+    gap: var(--spacing-2);
+  }
+}
+
